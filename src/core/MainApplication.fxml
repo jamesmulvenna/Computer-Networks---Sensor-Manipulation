@@ -19,12 +19,12 @@
       <Pane id="rootPane" prefHeight="500.0" prefWidth="700.0">
          <children>
             <Line id="xAxis" endX="700.0" endY="100.0" layoutY="127.0" startY="100.0" strokeMiterLimit="30.0"/>
-            <TextField layoutX="180.0" layoutY="437.0" promptText="5"/>
+            <TextField id="numberOfNodesInputBox" layoutX="180.0" layoutY="437.0" promptText="5"/>
             <Label layoutX="50.0" layoutY="442.0" text="Number of Nodes"/>
             <Text layoutX="50.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sensor Radius"/>
-            <TextField layoutX="180.0" layoutY="396.0" promptText="140"/>
+            <TextField id="sensorRadiusInputBox" layoutX="180.0" layoutY="396.0" promptText="140"/>
             <Button id="createGraphButton" layoutX="585.0" layoutY="451.0" mnemonicParsing="false" text="Create Graph"/>
-            <Button layoutX="576.0" layoutY="410.0" mnemonicParsing="false" text="Quit Application"/>
+            <Button id="quitButton" layoutX="576.0" layoutY="410.0" mnemonicParsing="false" text="Quit Application"/>
          </children>
       </Pane>
    </children>

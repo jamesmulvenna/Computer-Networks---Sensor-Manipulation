@@ -29,6 +29,7 @@ public class Main extends Application {
         primaryStage.setTitle("COMP 3203 Project");
         primaryStage.setScene(new Scene(root, 700, 500));
 
+
         primaryStage.show();
     }
 }
