@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -13,10 +15,20 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+    public void start(Stage primaryStage) {
+        Parent root = null;
+
+        try {
+            System.out.println("Loading main interface...");
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("core/MainApplication.fxml"));
+        } catch (IOException e) {
+            System.err.println("(FATAL) Missing file: MainApplication.fxml");
+            return;
+        }
+        System.out.println("Main interface loaded.");
         primaryStage.setTitle("COMP 3203 Project");
         primaryStage.setScene(new Scene(root, 700, 500));
+
         primaryStage.show();
     }
 }
