@@ -23,7 +23,7 @@ public class Main extends Application {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("core/MainApplication.fxml"));
         } catch (IOException e) {
             System.err.println("(FATAL) Missing file: MainApplication.fxml");
-            return;
+            System.exit(-1);
         }
         System.out.println("Main interface loaded.");
         primaryStage.setTitle("COMP 3203 Project");
