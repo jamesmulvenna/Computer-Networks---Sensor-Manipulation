@@ -3,19 +3,21 @@ package core;
 import io.IO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
 
 import java.net.URL;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    public static ArrayList<Node> originalWindow = new ArrayList<>();
     static int windowWidth = 700, windowHeight = 500;
     private static int numberOfNodes = 1, nodeRadius = 100;
-    private static LinkedList<Ellipse> nodeMirror = new LinkedList<>();
     @FXML
     public Pane windowPane;
     @FXML
@@ -24,6 +26,8 @@ public class Controller implements Initializable {
     private Button createGraph;
     @FXML
     private TextField nodeField;
+    @FXML
+    private Line xAxis;
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -44,6 +48,10 @@ public class Controller implements Initializable {
             handleNumberOfNodesChanged();
         });
 
+        for (Node e : windowPane.getChildren()) {
+            originalWindow.add(e);
+        }
+
     }
     private void handleNumberOfNodesChanged() {
         String text = this.nodeField.getText();
@@ -59,15 +67,18 @@ public class Controller implements Initializable {
     }
 
     private void redraw() {
-        nodeRadius = 50;
+        nodeRadius = 100;
+
+        windowPane.getChildren().clear();
+        windowPane.getChildren().addAll(originalWindow);
 
         for (int i = nodeRadius / 2; i < numberOfNodes * nodeRadius; i += nodeRadius) {
-            nodeMirror.add(new Ellipse(i, windowHeight / 2, nodeRadius / 2, nodeRadius / 2));
+            Ellipse e = new Ellipse(i, xAxis.getStartY() + xAxis.getEndY() + nodeRadius / 2, nodeRadius / 2, nodeRadius / 2);
+            e.setCenterY(225);
+            windowPane.getChildren().add(e);
         }
 
-        for (Ellipse e : nodeMirror) {
-            this.windowPane.getChildren().add(e);
-        }
+
     }
 
 

@@ -18,7 +18,8 @@
    <children>
       <Pane id="windowPane" fx:id="windowPane" prefHeight="500.0" prefWidth="700.0">
          <children>
-            <Line id="xAxis" endX="700.0" endY="100.0" layoutY="127.0" startY="100.0" strokeMiterLimit="30.0"/>
+            <Line id="xAxis" endX="700.0" endY="100.0" layoutY="127.0" startY="100.0" strokeMiterLimit="30.0"
+                  fx:id="xAxis"/>
             <Label layoutX="50.0" layoutY="442.0" text="Number of Nodes"/>
             <Text layoutX="50.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sensor Radius"/>
             <Button id="createGraphButton" fx:id="createGraph" layoutX="585.0" layoutY="451.0" mnemonicParsing="false"
