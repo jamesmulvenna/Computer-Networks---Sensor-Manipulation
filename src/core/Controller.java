@@ -12,6 +12,8 @@ public class Controller implements Initializable {
     private Button quitButton;
     @FXML
     private Button createGraph;
+    @FXML
+    private ;
 
     public void initialize(URL location, ResourceBundle resources) {
 
