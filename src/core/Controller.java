@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     public static ArrayList<Node> originalWindow = new ArrayList<>();
     static int windowWidth = 700, windowHeight = 500;
-    private static int numberOfNodes = 1, nodeRadius = 100;
+    private static float numberOfNodes = 1, nodeRadius = 100;
     @FXML
     public Pane windowPane;
     @FXML
@@ -28,6 +28,8 @@ public class Controller implements Initializable {
     private TextField nodeField;
     @FXML
     private Line xAxis;
+    @FXML
+    private TextField radiusField;
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -72,12 +74,13 @@ public class Controller implements Initializable {
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(originalWindow);
 
-        for (int i = nodeRadius / 2; i < numberOfNodes * nodeRadius; i += nodeRadius) {
+        for (float i = nodeRadius / 2; i < numberOfNodes * nodeRadius; i += nodeRadius) {
             Ellipse e = new Ellipse(i, xAxis.getStartY() + xAxis.getEndY() + nodeRadius / 2, nodeRadius / 2, nodeRadius / 2);
             e.setCenterY(225);
             windowPane.getChildren().add(e);
         }
 
+        radiusField.setText("" + nodeRadius);
 
     }
 

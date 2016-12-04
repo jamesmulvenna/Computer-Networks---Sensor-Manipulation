@@ -26,7 +26,7 @@
                     text="Create Graph"/>
             <Button id="quitButton" fx:id="quitButton" layoutX="576.0" layoutY="410.0" mnemonicParsing="false"
                     text="Quit Application"/>
-            <TextField layoutX="183.0" layoutY="396.0"/>
+            <TextField fx:id="radiusField" layoutX="183.0" layoutY="396.0"/>
             <TextField id="nodeField" fx:id="nodeField" layoutX="183.0" layoutY="446.0"/>
          </children>
       </Pane>
