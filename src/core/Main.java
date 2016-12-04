@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,12 +29,6 @@ public class Main extends Application {
 
     public static Scene getScene() {
         return scene;
-    }
-
-    public static void redraw(int numberOfNodes, int nodeRadius) {
-        Circle circle = new Circle(200, 200, 30);
-        circle.setFill(Color.BLACK);
-        canvas.getGraphicsContext2D().lineTo(100, 400);
     }
 
     @Override
