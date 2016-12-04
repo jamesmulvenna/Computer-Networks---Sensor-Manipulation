@@ -18,6 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
 
+
         try {
             System.out.println("Loading main interface...");
             root = FXMLLoader.load(getClass().getClassLoader().getResource("core/MainApplication.fxml"));
@@ -32,4 +33,8 @@ public class Main extends Application {
 
         primaryStage.show();
     }
+
+
 }
+
+
