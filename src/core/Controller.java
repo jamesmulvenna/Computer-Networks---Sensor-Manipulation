@@ -67,7 +67,7 @@ public class Controller implements Initializable {
     }
 
     private void redraw() {
-        nodeRadius = 100;
+        nodeRadius = windowWidth / numberOfNodes;
 
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(originalWindow);
