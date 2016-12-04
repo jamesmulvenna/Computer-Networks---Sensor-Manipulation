@@ -8,15 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML
-    public static Pane windowPane;
     static int windowWidth = 700, windowHeight = 500;
     private static int numberOfNodes = 1, nodeRadius = 100;
+    @FXML
+    public Pane windowPane;
     @FXML
     private Button quitButton;
     @FXML
@@ -46,8 +47,8 @@ public class Controller implements Initializable {
             }
         });
 
+        this.windowPane.getChildren().add(new Ellipse(200, 200, 200, 200));
     }
-
     private void handleNumberOfNodesChanged() {
         String text = this.nodeField.getText();
         if (IO.isInteger(text) && Integer.valueOf(text) > 0) {
@@ -55,7 +56,6 @@ public class Controller implements Initializable {
             numberOfNodes = Integer.valueOf(text);
             System.out.println("Number of nodes is now: " + numberOfNodes);
             System.out.println("Redrawing nodes...");
-            Main.redraw(numberOfNodes, nodeRadius);
         } else {
             System.err.println("Invalid input. Waiting for a positive integer value.");
         }
