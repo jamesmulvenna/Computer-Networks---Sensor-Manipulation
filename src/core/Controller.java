@@ -1,21 +1,21 @@
 package core;
 
 import io.IO;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     static int windowWidth = 700, windowHeight = 500;
     private static int numberOfNodes = 1, nodeRadius = 100;
+    private static LinkedList<Ellipse> nodeMirror = new LinkedList<>();
     @FXML
     public Pane windowPane;
     @FXML
@@ -39,15 +39,11 @@ public class Controller implements Initializable {
             System.out.println("Application is about to create graph.");
         });
 
-        this.nodeField.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.println("Number of nodes has changed.");
-                handleNumberOfNodesChanged();
-            }
+        this.nodeField.setOnKeyReleased(event -> {
+            System.out.println("Number of nodes has changed.");
+            handleNumberOfNodesChanged();
         });
 
-        this.windowPane.getChildren().add(new Ellipse(200, 200, 200, 200));
     }
     private void handleNumberOfNodesChanged() {
         String text = this.nodeField.getText();
@@ -56,11 +52,23 @@ public class Controller implements Initializable {
             numberOfNodes = Integer.valueOf(text);
             System.out.println("Number of nodes is now: " + numberOfNodes);
             System.out.println("Redrawing nodes...");
+            redraw();
         } else {
             System.err.println("Invalid input. Waiting for a positive integer value.");
         }
     }
 
+    private void redraw() {
+        nodeRadius = 50;
+
+        for (int i = nodeRadius / 2; i < numberOfNodes * nodeRadius; i += nodeRadius) {
+            nodeMirror.add(new Ellipse(i, windowHeight / 2, nodeRadius / 2, nodeRadius / 2));
+        }
+
+        for (Ellipse e : nodeMirror) {
+            this.windowPane.getChildren().add(e);
+        }
+    }
 
 
 }
