@@ -19,20 +19,52 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public static ArrayList<Node> originalWindow = new ArrayList<>();
+    /**
+     * Default height and width of the UI Window.
+     */
     static int windowWidth = 700, windowHeight = 500;
+    /**
+     * Mirrors the elements contained by the original window.
+     */
+    private static ArrayList<Node> originalWindow = new ArrayList<>();
+    /**
+     * Default number of nodes and respective radius.
+     * These are changed almost instantly at runtime.
+     */
     private static double numberOfNodes = 1, nodeRadius = 100;
+    /**
+     * The actual window that you see.
+     */
     @FXML
     public Pane windowPane;
+    /**
+     * The button used to quit the application.
+     */
     @FXML
     private Button quitButton;
+    /**
+     * The textfield that allows you specify how many nodes are to be drawn.
+     */
     @FXML
     private TextField nodeField;
+    /**
+     * The X axis drawn across the center of the screen.
+     */
     @FXML
     private Line xAxis;
+    /**
+     * The radius of the nodes.
+     */
     @FXML
     private TextField radiusField;
 
+    /**
+     * Called after the Class constructor by JavaFX to inject code.
+     * This is used to set the actions of the various JavaFX UI elements.
+     *
+     * @param location  the location.
+     * @param resources the resources to use.
+     */
     public void initialize(URL location, ResourceBundle resources) {
 
         /*
@@ -43,17 +75,25 @@ public class Controller implements Initializable {
             System.exit(0);
         });
 
+        /*
+         * Causes the application to handle the number of nodes to be presented.
+         */
         this.nodeField.setOnKeyReleased(event -> {
             System.out.println("Number of nodes has changed.");
             handleNumberOfNodesChanged();
         });
 
+        /*
+         * Causes the application to handle the number of nodes/radius on a radius change.
+         */
         this.radiusField.setOnKeyReleased(event -> {
             System.out.println("Radius has changed.");
             handleRadiusChange();
         });
 
-
+        /*
+         * Adds the elements contained by the original program to the mirror.
+         */
         for (Node e : windowPane.getChildren()) {
             originalWindow.add(e);
         }
