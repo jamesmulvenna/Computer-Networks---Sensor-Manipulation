@@ -110,9 +110,14 @@ public class Controller implements Initializable {
         TranslateTransition transition;
         double x;
         double y;
+
         for (double i = 0; i < numberOfNodes * nodeRadius; i += nodeRadius) {
-            x = new Random().nextInt(windowWidth - (int) nodeRadius);
-            y = new Random().nextInt(windowHeight - (int) nodeRadius);
+            int ww = windowWidth - (int) nodeRadius, wh = windowHeight - (int) nodeRadius;
+            // This is a hacky fix for the 1 node runtime error.
+            if (ww < 2) ww = 1;
+            if (wh < 2) wh = 1;
+            x = new Random().nextInt(ww);
+            y = new Random().nextInt(wh);
             Circle e = new Circle(x, y, nodeRadius / 2);
             transition = new TranslateTransition();
             x = i + (nodeRadius / 2) - x;
