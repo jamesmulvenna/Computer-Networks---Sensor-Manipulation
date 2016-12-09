@@ -27,8 +27,6 @@ public class Controller implements Initializable {
     @FXML
     private Button quitButton;
     @FXML
-    private Button createGraph;
-    @FXML
     private TextField nodeField;
     @FXML
     private Line xAxis;
@@ -43,10 +41,6 @@ public class Controller implements Initializable {
         this.quitButton.setOnMouseClicked(event -> {
             System.out.println("Application is about to quit.");
             System.exit(0);
-        });
-
-        this.createGraph.setOnMouseClicked(event -> {
-            System.out.println("Application is about to create graph.");
         });
 
         this.nodeField.setOnKeyReleased(event -> {
