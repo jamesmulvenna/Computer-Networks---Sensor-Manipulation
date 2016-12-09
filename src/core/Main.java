@@ -35,7 +35,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         root = null;
         mainStage = primaryStage;
-        canvas = new Canvas(Controller.windowWidth, Controller.windowHeight);
+        canvas = new Canvas(Controller.WINDOW_WIDTH, Controller.WINDOW_HEIGHT);
         try {
             System.out.println("Loading main interface...");
             root = FXMLLoader.load(getClass().getClassLoader().getResource("core/MainApplication.fxml"));

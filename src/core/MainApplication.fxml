@@ -9,25 +9,27 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
-
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.Controller">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" vgap="10"
+          xmlns="http://javafx.com/javafx/8.0.112" fx:controller="core.Controller">
    <columnConstraints>
-      <ColumnConstraints />
+      <ColumnConstraints/>
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints />
+      <RowConstraints/>
    </rowConstraints>
    <children>
       <Pane id="windowPane" fx:id="windowPane" prefHeight="500.0" prefWidth="700.0">
          <children>
-            <Line id="xAxis" endX="700.0" endY="100.0" layoutY="127.0" startY="100.0" strokeMiterLimit="30.0" fx:id="xAxis" />
-            <Label layoutX="50.0" layoutY="442.0" text="Number of Nodes" />
-            <Text layoutX="50.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sensor Radius" />
-            <Button id="quitButton" fx:id="quitButton" layoutX="412.0" layoutY="427.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" text="Quit Application" />
-            <TextField id="radiusField" fx:id="radiusField" layoutX="183.0" layoutY="396.0" />
-            <TextField id="nodeField" fx:id="nodeField" layoutX="183.0" layoutY="446.0" />
-            <Text layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-            <Text layoutX="686.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+            <Line id="xAxis" endX="700.0" endY="100.0" layoutY="127.0" startY="100.0" strokeMiterLimit="30.0"
+                  fx:id="xAxis"/>
+            <Label layoutX="50.0" layoutY="442.0" text="Number of Nodes"/>
+            <Text layoutX="50.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sensor Radius"/>
+            <Button id="quitButton" fx:id="quitButton" layoutX="540.0" layoutY="444.0" mnemonicParsing="false"
+                    prefHeight="31.0" prefWidth="152.0" text="Quit Application"/>
+            <TextField id="radiusField" fx:id="radiusField" layoutX="183.0" layoutY="396.0"/>
+            <TextField id="nodeField" fx:id="nodeField" layoutX="183.0" layoutY="446.0"/>
+            <Text layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0"/>
+            <Text layoutX="686.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1"/>
          </children>
       </Pane>
    </children>
