@@ -22,16 +22,20 @@ public class Controller implements Initializable {
     /**
      * Default height and width of the UI Window.
      */
-    static int windowWidth = 700, windowHeight = 500;
+    static final int WINDOW_WIDTH = 700, WINDOW_HEIGHT = 500;
+    /**
+     * The duration in seconds for a transition to last.
+     */
+    private static final int TRANSITION_DURATION = 5;
     /**
      * Mirrors the elements contained by the original window.
      */
-    private static ArrayList<Node> originalWindow = new ArrayList<>();
+    private static ArrayList<Node> ORIGINAL_WINDOW = new ArrayList<>();
     /**
      * Default number of nodes and respective radius.
      * These are changed almost instantly at runtime.
      */
-    private static double numberOfNodes = 1, nodeRadius = 100;
+    private static double NUMBER_OF_NODES = 1, NODE_RADIUS = 100;
     /**
      * The actual window that you see.
      */
@@ -95,7 +99,7 @@ public class Controller implements Initializable {
          * Adds the elements contained by the original program to the mirror.
          */
         for (Node e : windowPane.getChildren()) {
-            originalWindow.add(e);
+            ORIGINAL_WINDOW.add(e);
         }
 
     }
@@ -122,8 +126,8 @@ public class Controller implements Initializable {
      */
     private void handleValidNodeChange(String text) {
         System.out.println("Valid integer. Changing number of nodes.");
-        numberOfNodes = Integer.valueOf(text);
-        System.out.println("Number of nodes is now: " + numberOfNodes);
+        NUMBER_OF_NODES = Integer.valueOf(text);
+        System.out.println("Number of nodes is now: " + NUMBER_OF_NODES);
         System.out.println("Redrawing nodes...");
         redrawNodes();
     }
@@ -133,7 +137,7 @@ public class Controller implements Initializable {
      */
     private void handleZeroNodes() {
         System.out.println("Value is 0. Removing nodes...");
-        numberOfNodes = 0;
+        NUMBER_OF_NODES = 0;
         redrawNodes();
         radiusField.setText("No Sensors.");
     }
@@ -145,7 +149,7 @@ public class Controller implements Initializable {
      */
     private void handleInvalidNumberOfSesnors() {
         // Remove the nodes due to invalid input.
-        numberOfNodes = 0;
+        NUMBER_OF_NODES = 0;
         this.nodeField.setText("0");
         redrawNodes();
         radiusField.setText("Invalid Input.");
@@ -163,8 +167,8 @@ public class Controller implements Initializable {
         String text = this.radiusField.getText();
         if (IO.isInteger(text) && Integer.valueOf(text) > 0) {
             System.out.println("Valid integer. Changing node radius.");
-            nodeRadius = Integer.valueOf(text);
-            System.out.println("Node radius is now: " + nodeRadius);
+            NODE_RADIUS = Integer.valueOf(text);
+            System.out.println("Node radius is now: " + NODE_RADIUS);
             System.out.println("Redrawing nodes...");
             redrawRadius();
         } else {
@@ -177,11 +181,11 @@ public class Controller implements Initializable {
      * Redraws all of the nodes on the foreground.
      */
     private void redrawNodes() {
-        nodeRadius = windowWidth / numberOfNodes;
+        NODE_RADIUS = WINDOW_WIDTH / NUMBER_OF_NODES;
         windowPane.getChildren().clear();
-        windowPane.getChildren().addAll(originalWindow);
+        windowPane.getChildren().addAll(ORIGINAL_WINDOW);
         redrawSpriteLoop();
-        radiusField.setText("" + nodeRadius);
+        radiusField.setText("" + NODE_RADIUS);
 
     }
 
@@ -190,11 +194,11 @@ public class Controller implements Initializable {
      * Calls the sprite update method.
      */
     private void redrawRadius() {
-        numberOfNodes = (int) (windowWidth / nodeRadius) + 1;
+        NUMBER_OF_NODES = (int) (WINDOW_WIDTH / NODE_RADIUS) + 1;
         windowPane.getChildren().clear();
-        windowPane.getChildren().addAll(originalWindow);
+        windowPane.getChildren().addAll(ORIGINAL_WINDOW);
         redrawSpriteLoop();
-        nodeField.setText("" + numberOfNodes);
+        nodeField.setText("" + NUMBER_OF_NODES);
 
     }
 
@@ -203,27 +207,34 @@ public class Controller implements Initializable {
      */
     private void redrawSpriteLoop() {
         TranslateTransition transition;
-        double x;
-        double y;
+        double x, y;
 
-        for (double i = 0; i < numberOfNodes * nodeRadius; i += nodeRadius) {
-            int ww = windowWidth - (int) nodeRadius, wh = windowHeight - (int) nodeRadius;
+        for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+            // Generate random coordinates.
+            int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS, randomYPosition = WINDOW_HEIGHT - (int) NODE_RADIUS;
             // This is a hacky fix for the 1 node runtime error.
-            if (ww < 2) ww = 1;
-            if (wh < 2) wh = 1;
-            x = new Random().nextInt(ww);
-            y = new Random().nextInt(wh);
-            Circle e = new Circle(x, y, nodeRadius / 2);
+            if (randomXPosition < 2) randomXPosition = 1;
+            if (randomYPosition < 2) randomYPosition = 1;
+
+            // Assign random coordinates.
+            x = new Random().nextInt(randomXPosition);
+            y = new Random().nextInt(randomYPosition);
+
+            // Create a Circle object to represent a sensor radius to be drawn.
+            Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
             transition = new TranslateTransition();
-            x = i + (nodeRadius / 2) - x;
+
+            // Assign re-calculated coordinates to node i.
+            x = i + (NODE_RADIUS / 2) - x;
             y = 225 - y;
             transition.setToX(x);
             transition.setToY(y);
 
-            transition.setDuration(Duration.seconds(5));
-            transition.setNode(e);
+            // transition node i in a direction for the duration of a transition.
+            transition.setDuration(Duration.seconds(TRANSITION_DURATION));
+            transition.setNode(sensorToDraw);
             transition.play();
-            windowPane.getChildren().add(e);
+            windowPane.getChildren().add(sensorToDraw);
         }
     }
 
