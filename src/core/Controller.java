@@ -91,27 +91,7 @@ public class Controller implements Initializable {
 
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(originalWindow);
-
-        TranslateTransition transition;
-        double x;
-        double y;
-
-        for (double i = 0; i < numberOfNodes * nodeRadius; i += nodeRadius) {
-            x = new Random().nextInt(windowWidth - (int) nodeRadius);
-            y = new Random().nextInt(windowHeight - (int) nodeRadius);
-            Circle e = new Circle(x, y, nodeRadius / 2);
-            transition = new TranslateTransition();
-            x = i + (nodeRadius / 2) - x;
-            y = 225 - y;
-            transition.setToX(x);
-            transition.setToY(y);
-
-            transition.setDuration(Duration.seconds(5));
-            transition.setNode(e);
-            transition.play();
-            windowPane.getChildren().add(e);
-        }
-
+        redrawSpriteLoop();
         radiusField.setText("" + nodeRadius);
 
     }
@@ -121,11 +101,15 @@ public class Controller implements Initializable {
 
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(originalWindow);
+        redrawSpriteLoop();
+        nodeField.setText("" + numberOfNodes);
 
+    }
+
+    private void redrawSpriteLoop() {
         TranslateTransition transition;
         double x;
         double y;
-
         for (double i = 0; i < numberOfNodes * nodeRadius; i += nodeRadius) {
             x = new Random().nextInt(windowWidth - (int) nodeRadius);
             y = new Random().nextInt(windowHeight - (int) nodeRadius);
@@ -141,9 +125,6 @@ public class Controller implements Initializable {
             transition.play();
             windowPane.getChildren().add(e);
         }
-
-        nodeField.setText("" + numberOfNodes);
-
     }
 
 
