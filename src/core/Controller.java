@@ -9,6 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
@@ -222,6 +226,11 @@ public class Controller implements Initializable {
 
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
+            // Make the nodes look cute.
+            Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
+            RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+            sensorToDraw.setFill(gradient);
+
             transition = new TranslateTransition();
 
             // Assign re-calculated coordinates to node i.
