@@ -28,6 +28,7 @@
                     text="Quit Application"/>
             <TextField fx:id="radiusField" layoutX="183.0" layoutY="396.0"/>
             <TextField id="nodeField" fx:id="nodeField" layoutX="183.0" layoutY="446.0"/>
+            <TextField id="radiusField" fx:id="radiusField" layoutX="183.0" layoutY="446.0"/>
          </children>
       </Pane>
    </children>

@@ -9,15 +9,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
+import javafx.scene.shape.*;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Random;
 
 public class Controller implements Initializable {
     public static ArrayList<Node> originalWindow = new ArrayList<>();
     static int windowWidth = 700, windowHeight = 500;
-    private static float numberOfNodes = 1, nodeRadius = 100;
+    private static double numberOfNodes = 1, nodeRadius = 100;
     @FXML
     public Pane windowPane;
     @FXML
@@ -50,6 +54,12 @@ public class Controller implements Initializable {
             handleNumberOfNodesChanged();
         });
 
+        this.radiusField.setOnKeyReleased(event -> {
+            System.out.println("Radius has changed.");
+            handleRadiusChange();
+        });
+
+
         for (Node e : windowPane.getChildren()) {
             originalWindow.add(e);
         }
@@ -62,27 +72,87 @@ public class Controller implements Initializable {
             numberOfNodes = Integer.valueOf(text);
             System.out.println("Number of nodes is now: " + numberOfNodes);
             System.out.println("Redrawing nodes...");
-            redraw();
+            redrawNodes();
         } else {
             System.err.println("Invalid input. Waiting for a positive integer value.");
         }
     }
 
-    private void redraw() {
+    private void handleRadiusChange(){
+        String text = this.radiusField.getText();
+        if(IO.isInteger(text) && Integer.valueOf(text) > 0){
+            System.out.println("Valid integer. Changing node radius.");
+            nodeRadius = Integer.valueOf(text);
+            System.out.println("Node radius is now: " + nodeRadius);
+            System.out.println("Redrawing nodes...");
+            redrawRadius();
+        }
+        else {
+            System.err.println("Invalid input. Waiting for a positive integer value.");
+        }
+    }
+
+
+    private void redrawNodes() {
         nodeRadius = windowWidth / numberOfNodes;
 
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(originalWindow);
 
-        for (float i = nodeRadius / 2; i < numberOfNodes * nodeRadius; i += nodeRadius) {
-            Ellipse e = new Ellipse(i, xAxis.getStartY() + xAxis.getEndY() + nodeRadius / 2, nodeRadius / 2, nodeRadius / 2);
-            e.setCenterY(225);
+        TranslateTransition transition;
+        double x;
+        double y;
+
+        for(double i = 0; i < numberOfNodes * nodeRadius; i += nodeRadius){
+            x = new Random().nextInt(windowWidth - (int)nodeRadius);
+            y = new Random().nextInt(windowHeight - (int)nodeRadius);
+            Circle e = new Circle(x, y, nodeRadius / 2);
+            transition = new TranslateTransition();
+            x = i +(nodeRadius/2) - x;
+            y = 225 - y;
+            transition.setToX(x);
+            transition.setToY(y);
+
+            transition.setDuration(Duration.seconds(5));
+            transition.setNode(e);
+            transition.play();
             windowPane.getChildren().add(e);
         }
 
         radiusField.setText("" + nodeRadius);
 
     }
+
+    private void redrawRadius() {
+        numberOfNodes = (int)(windowWidth / nodeRadius) + 1;
+
+        windowPane.getChildren().clear();
+        windowPane.getChildren().addAll(originalWindow);
+
+        TranslateTransition transition;
+        double x;
+        double y;
+
+        for(double i = 0; i < numberOfNodes * nodeRadius; i += nodeRadius){
+            x = new Random().nextInt(windowWidth - (int)nodeRadius);
+            y = new Random().nextInt(windowHeight - (int)nodeRadius);
+            Circle e = new Circle(x, y, nodeRadius / 2);
+            transition = new TranslateTransition();
+            x = i +(nodeRadius/2) - x;
+            y = 225 - y;
+            transition.setToX(x);
+            transition.setToY(y);
+
+            transition.setDuration(Duration.seconds(5));
+            transition.setNode(e);
+            transition.play();
+            windowPane.getChildren().add(e);
+        }
+
+        nodeField.setText("" + numberOfNodes);
+
+    }
+
 
 
 }
