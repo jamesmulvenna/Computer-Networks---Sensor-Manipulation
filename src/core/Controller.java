@@ -18,9 +18,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
     /**
@@ -273,13 +271,18 @@ public class Controller implements Initializable {
                 redrawSpritesWithAlgorithm1();
             } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(1))) {
                 System.out.println("Using algorithm 2...");
-                // Algorithm 2
+                redrawSpritesWithAlgorithm2();
             }
         } catch (NullPointerException e) {
             errorSpecifyAlgorithm();
         }
     }
 
+    /**
+     * Called when the user has not yet specified an algorithm.
+     * Displays a warning that notifies the user to specify an algorithm
+     * and sets the input fields to "0".
+     */
     private void errorSpecifyAlgorithm() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Invalid Algorithm");
@@ -292,7 +295,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Causes the sprites to be called and move around "performing the algorithm".
+     * Causes the sprites to be called and move around using algorithm 1.
      */
     private void redrawSpritesWithAlgorithm1() {
         TranslateTransition transition;
@@ -314,6 +317,7 @@ public class Controller implements Initializable {
             // Make the nodes look cute.
             Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
             RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+            sensorToDraw.setOpacity(0.9);
             sensorToDraw.setFill(gradient);
 
             transition = new TranslateTransition();
@@ -323,6 +327,48 @@ public class Controller implements Initializable {
             y = 225 - y;
             transition.setToX(x);
             transition.setToY(y);
+
+            // transition node i in a direction for the duration of a transition.
+            transition.setDuration(Duration.seconds(TRANSITION_DURATION));
+            transition.setNode(sensorToDraw);
+            transition.play();
+            windowPane.getChildren().add(sensorToDraw);
+        }
+    }
+
+
+    /**
+     * Causes the sprites to be called and move around using algorithm 2.
+     */
+    private void redrawSpritesWithAlgorithm2() {
+        TranslateTransition transition;
+        double x, y;
+        Queue<Circle> nodePositionQueue = new ArrayDeque<>((int) NUMBER_OF_NODES);
+
+        for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+            // Generate random coordinates.
+            int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS, randomYPosition = (WINDOW_HEIGHT / 2) - 25;
+            // This is a hacky fix for the 1 node runtime error.
+            if (randomXPosition < 2) randomXPosition = 1;
+
+            // Assign random coordinates.
+            x = new Random().nextInt(randomXPosition);
+            y = randomYPosition;
+
+            // Create a Circle object to represent a sensor radius to be drawn.
+            Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
+            // Make the nodes look cute.
+            Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
+            RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+            sensorToDraw.setOpacity(0.9);
+            sensorToDraw.setFill(gradient);
+
+            transition = new TranslateTransition();
+
+            // Assign re-calculated coordinates to node i.
+            x = i + (NODE_RADIUS / 2) - x;
+            transition.setToX(x);
+            //transition.setToY(y);
 
             // transition node i in a direction for the duration of a transition.
             transition.setDuration(Duration.seconds(TRANSITION_DURATION));
