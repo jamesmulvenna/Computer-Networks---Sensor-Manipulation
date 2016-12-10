@@ -308,10 +308,7 @@ public class Controller implements Initializable {
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
             // Make the nodes look cute.
-            Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
-            RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-            sensorToDraw.setOpacity(0.9);
-            sensorToDraw.setFill(gradient);
+            prettifySensor(sensorToDraw, 1);
 
             transition = new TranslateTransition();
 
@@ -325,6 +322,29 @@ public class Controller implements Initializable {
             transition.play();
             windowPane.getChildren().add(sensorToDraw);
         }
+    }
+
+    /**
+     * Determines what the sensors should look like. Called by each algorithm method.
+     *
+     * @param sensor          The sensor to apply to.
+     * @param algorithmNumber The algorithm number to specify prettyness for.
+     */
+    private void prettifySensor(Circle sensor, int algorithmNumber) {
+        Stop[] gradientStops;
+        RadialGradient gradient = null;
+        if (algorithmNumber == 1) {
+            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+        } else if (algorithmNumber == 2) {
+            // Make the nodes look cute.
+            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+        } else {
+            System.err.println("No prettyness to add.");
+        }
+        sensor.setOpacity(0.9);
+        sensor.setFill(gradient);
     }
 
     /**
@@ -351,11 +371,7 @@ public class Controller implements Initializable {
 
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
-            // Make the nodes look cute.
-            Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
-            RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-            sensorToDraw.setOpacity(0.9);
-            sensorToDraw.setFill(gradient);
+            prettifySensor(sensorToDraw, 2);
 
             transition = new TranslateTransition();
 
