@@ -110,7 +110,7 @@ public class Controller implements Initializable {
 
     private void handleNumberOfNodesChanged() {
         String text = this.nodeField.getText();
-        if (IO.isInteger(text) && Integer.valueOf(text) > 0) {
+        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) < 2 * WINDOW_WIDTH) {
             handleValidNodeChange(text);
         } else if (IO.isInteger(text) && Integer.valueOf(text) == 0) {
             handleZeroNodes();
@@ -119,7 +119,7 @@ public class Controller implements Initializable {
             System.err.println("Invalid input. Waiting for a positive integer value.");
         } else {
             // The user is probably inputting characters or negative values.
-            handleInvalidNumberOfSesnors();
+            handleInvalidNumberOfSensors();
         }
     }
 
@@ -142,8 +142,9 @@ public class Controller implements Initializable {
     private void handleZeroNodes() {
         System.out.println("Value is 0. Removing nodes...");
         NUMBER_OF_NODES = 0;
+        NODE_RADIUS = 0;
         redrawNodes();
-        radiusField.setText("No Sensors.");
+        radiusField.setText("0");
     }
 
 
@@ -151,12 +152,12 @@ public class Controller implements Initializable {
      * Displays an alert message, sets the number of nodes to 0 and sets the radius input field
      * to an error message.
      */
-    private void handleInvalidNumberOfSesnors() {
+    private void handleInvalidNumberOfSensors() {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
         this.nodeField.setText("0");
         redrawNodes();
-        radiusField.setText("Invalid Input.");
+        radiusField.setText("0");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Invalid Input");
         alert.setHeaderText("Invalid Number of Sensors!");
@@ -170,6 +171,10 @@ public class Controller implements Initializable {
     private void handleRadiusChange() {
         String text = this.radiusField.getText();
         if (IO.isInteger(text) && Integer.valueOf(text) > 0) {
+            if (Integer.valueOf(text) > WINDOW_WIDTH) {
+                handleInvalidRadius();
+                return;
+            }
             System.out.println("Valid integer. Changing node radius.");
             NODE_RADIUS = Integer.valueOf(text);
             NUMBER_OF_NODES = WINDOW_WIDTH / NODE_RADIUS;
@@ -178,9 +183,29 @@ public class Controller implements Initializable {
             System.out.println("Number of Nodes: " + NUMBER_OF_NODES);
             System.out.println("Redrawing nodes...");
             redrawRadius();
-        } else {
+        } else if (IO.isInteger(text) && Integer.valueOf(text) == 0) {
+            handleZeroNodes();
+        } else if (text.length() == 0) {
+            // The user is probably entering a new number.
             System.err.println("Invalid input. Waiting for a positive integer value.");
+        } else {
+            // The user is probably inputting characters or negative values.
+            handleInvalidRadius();
         }
+    }
+
+    private void handleInvalidRadius() {
+        // Remove the nodes due to invalid input.
+        NUMBER_OF_NODES = 0;
+        NODE_RADIUS = 0;
+        this.nodeField.setText("0");
+        redrawNodes();
+        radiusField.setText("0");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Invalid Input");
+        alert.setHeaderText("Invalid Radius Entered!");
+        alert.setContentText("Please ensure that you have entered a valid sensor radius!.\nPlease ensure that the specified radius is smaller than the available width of the window (" + WINDOW_WIDTH + ") units.");
+        alert.showAndWait();
     }
 
 
