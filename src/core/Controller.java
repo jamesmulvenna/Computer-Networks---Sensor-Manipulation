@@ -194,6 +194,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Called when an invalid radius is entered by the user.
+     */
     private void handleInvalidRadius() {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
@@ -227,6 +230,9 @@ public class Controller implements Initializable {
      */
     private void redrawRadius() {
         NUMBER_OF_NODES = (int) (WINDOW_WIDTH / NODE_RADIUS);
+        if (WINDOW_WIDTH / NODE_RADIUS != NUMBER_OF_NODES) {
+            NUMBER_OF_NODES += 1;
+        }
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
         redrawSpriteLoop();
