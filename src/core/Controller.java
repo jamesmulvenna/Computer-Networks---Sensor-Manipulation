@@ -299,20 +299,14 @@ public class Controller implements Initializable {
      */
     private void redrawSpritesWithAlgorithm1() {
         TranslateTransition transition;
-        double x, y;
-
+        double x;
+        double y = (WINDOW_HEIGHT / 2) - 25;
 
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
-            // Generate random coordinates.
-            int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS, yPosition = (WINDOW_HEIGHT / 2) - 25;
-            // This is a hacky fix for the 1 node runtime error.
-            if (randomXPosition < 2) randomXPosition = 1;
-
-            // Assign random coordinates.
-            x = new Random().nextInt(randomXPosition);
-
+            // Generate and assign random coordinates.
+            x = assignRandomXPosition();
             // Create a Circle object to represent a sensor radius to be drawn.
-            Circle sensorToDraw = new Circle(x, yPosition, NODE_RADIUS / 2);
+            Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
             // Make the nodes look cute.
             Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
             RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
@@ -333,6 +327,16 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Generates a random X value somewhere on the line.
+     *
+     * @return int
+     */
+    private int assignRandomXPosition() {
+        int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS;
+        return new Random().nextInt(randomXPosition < 2 ? 1 : randomXPosition);
+    }
+
 
     /**
      * Causes the sprites to be called and move around using algorithm 2.
@@ -343,13 +347,7 @@ public class Controller implements Initializable {
         Queue<Circle> nodePositionQueue = new ArrayDeque<>((int) NUMBER_OF_NODES);
         LinkedList<Double> coordinates = getSensorPositions();
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
-            // Generate random coordinates.
-            int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS;
-            // This is a hacky fix for the 1 node runtime error.
-            if (randomXPosition < 2) randomXPosition = 1;
-
-            // Assign random coordinates.
-            x = new Random().nextInt(randomXPosition);
+            x = assignRandomXPosition();
 
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
