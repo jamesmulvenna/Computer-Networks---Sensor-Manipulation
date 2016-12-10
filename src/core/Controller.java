@@ -170,16 +170,11 @@ public class Controller implements Initializable {
      */
     private void handleRadiusChange() {
         String text = this.radiusField.getText();
-        if (IO.isInteger(text) && Integer.valueOf(text) > 0) {
-            if (Integer.valueOf(text) > WINDOW_WIDTH) {
-                handleInvalidRadius();
-                return;
-            }
+        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= WINDOW_WIDTH) {
             System.out.println("Valid integer. Changing node radius.");
             NODE_RADIUS = Integer.valueOf(text);
             NUMBER_OF_NODES = WINDOW_WIDTH / NODE_RADIUS;
             System.out.println("Node radius is now: " + NODE_RADIUS);
-            System.out.println("Adjusted required number of nodes.");
             System.out.println("Number of Nodes: " + NUMBER_OF_NODES);
             System.out.println("Redrawing nodes...");
             redrawRadius();
@@ -201,8 +196,8 @@ public class Controller implements Initializable {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
         NODE_RADIUS = 0;
-        this.nodeField.setText("0");
         redrawNodes();
+        this.nodeField.setText("0");
         radiusField.setText("0");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Invalid Input");
@@ -230,9 +225,9 @@ public class Controller implements Initializable {
      */
     private void redrawRadius() {
         NUMBER_OF_NODES = (int) (WINDOW_WIDTH / NODE_RADIUS);
-        if (WINDOW_WIDTH / NODE_RADIUS != NUMBER_OF_NODES) {
-            NUMBER_OF_NODES += 1;
-        }
+        // For the case that the nodes can't fill the domain after type casting.
+        if (WINDOW_WIDTH / NODE_RADIUS != NUMBER_OF_NODES) NUMBER_OF_NODES += 1;
+
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
         redrawSpriteLoop();
