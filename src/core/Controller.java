@@ -100,8 +100,8 @@ public class Controller implements Initializable {
          * Causes the application to handle the number of nodes to be presented.
          */
         this.nodeField.setOnKeyReleased(event -> {
-            if (!this.nodeField.getText().equals(LAST_ENTERED_NUMBER_OF_NODES)) {
-                LAST_ENTERED_NUMBER_OF_NODES = this.nodeField.getText();
+            if (!this.nodeField.getText().trim().equals(LAST_ENTERED_NUMBER_OF_NODES)) {
+                LAST_ENTERED_NUMBER_OF_NODES = this.nodeField.getText().trim();
                 System.out.println("Number of nodes has changed.");
                 handleNumberOfNodesChanged();
             }
@@ -111,9 +111,9 @@ public class Controller implements Initializable {
          * Causes the application to handle the number of nodes/radius on a radius change.
          */
         this.radiusField.setOnKeyReleased(event -> {
-            if (!this.radiusField.getText().equals(LAST_ENTERED_RADIUS)) {
+            if (!this.radiusField.getText().trim().equals(LAST_ENTERED_RADIUS)) {
                 System.out.println("Radius has changed.");
-                LAST_ENTERED_RADIUS = this.radiusField.getText();
+                LAST_ENTERED_RADIUS = this.radiusField.getText().trim();
                 handleRadiusChange();
             }
         });
@@ -128,7 +128,7 @@ public class Controller implements Initializable {
     }
 
     private void handleNumberOfNodesChanged() {
-        String text = this.nodeField.getText();
+        String text = this.nodeField.getText().trim();
         if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) < 2 * WINDOW_WIDTH) {
             handleValidNodeChange(text);
         } else if (IO.isInteger(text) && Integer.valueOf(text) == 0) {
@@ -188,7 +188,7 @@ public class Controller implements Initializable {
      * Called to change the value of the sensor radix.
      */
     private void handleRadiusChange() {
-        String text = this.radiusField.getText();
+        String text = this.radiusField.getText().trim();
         if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= WINDOW_WIDTH) {
             System.out.println("Valid integer. Changing node radius.");
             NODE_RADIUS = Integer.valueOf(text);

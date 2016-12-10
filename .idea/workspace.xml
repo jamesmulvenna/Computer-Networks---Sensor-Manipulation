@@ -105,8 +105,8 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="103" column="72" lean-forward="false" selection-start-line="103" selection-start-column="72" selection-end-line="103" selection-end-column="72" />
+            <state relative-caret-position="148">
+              <caret line="102" column="48" lean-forward="false" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -751,7 +751,7 @@
       <workItem from="1481145568347" duration="1449000" />
       <workItem from="1481265595546" duration="4665000" />
       <workItem from="1481329998915" duration="39000" />
-      <workItem from="1481390886653" duration="3060000" />
+      <workItem from="1481390886653" duration="3228000" />
     </task>
     <task id="LOCAL-00001" summary="Update window size and package names.">
       <created>1480795003353</created>
@@ -900,11 +900,18 @@
       <option name="project" value="LOCAL" />
       <updated>1481397776017</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Fixed an issue where hitting escape would cause the nodes to change positions and redraw themselves.">
+      <created>1481398177269</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1481398177269</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37076000" />
+    <option name="totallyTimeSpent" value="37244000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="723" extended-state="6" />
@@ -974,7 +981,8 @@
     <MESSAGE value="Minor bug fixes and input error checking." />
     <MESSAGE value="Whoops, now I get why we need the +1." />
     <MESSAGE value="Small code cleanup." />
-    <option name="LAST_COMMIT_MESSAGE" value="Small code cleanup." />
+    <MESSAGE value="Fixed an issue where hitting escape would cause the nodes to change positions and redraw themselves." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed an issue where hitting escape would cause the nodes to change positions and redraw themselves." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1275,8 +1283,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="103" column="72" lean-forward="false" selection-start-line="103" selection-start-column="72" selection-end-line="103" selection-end-column="72" />
+        <state relative-caret-position="148">
+          <caret line="102" column="48" lean-forward="false" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
