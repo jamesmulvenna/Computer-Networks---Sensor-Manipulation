@@ -2,12 +2,12 @@ package core;
 
 import io.IO;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -78,6 +78,13 @@ public class Controller implements Initializable {
      */
     @FXML
     private TextField radiusField;
+    /**
+     * Specifies the algorithm to use for drawing the nodes.
+     */
+    @FXML
+    private ChoiceBox<String> algorithmSelector;
+
+    private ObservableList<String> algorithmList;
 
     /**
      * Called after the Class constructor by JavaFX to inject code.
@@ -118,6 +125,9 @@ public class Controller implements Initializable {
             }
         });
 
+
+        this.algorithmSelector.setItems(FXCollections.observableArrayList("Algorithm 1", "Algorithm 2"));
+        this.algorithmSelector.setTooltip(new Tooltip("Select the algorithm to be used when moving the sensors."));
         /*
          * Adds the elements contained by the original program to the mirror.
          */
@@ -174,8 +184,8 @@ public class Controller implements Initializable {
     private void handleInvalidNumberOfSensors() {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
-        this.nodeField.setText("0");
         redrawNodes();
+        this.nodeField.setText("0");
         radiusField.setText("0");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Invalid Input");
@@ -233,9 +243,8 @@ public class Controller implements Initializable {
         NODE_RADIUS = WINDOW_WIDTH / NUMBER_OF_NODES;
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
-        redrawSpriteLoop();
         radiusField.setText("" + NODE_RADIUS);
-
+        redrawSprites();
     }
 
     /**
@@ -249,14 +258,43 @@ public class Controller implements Initializable {
 
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
-        redrawSpriteLoop();
         nodeField.setText("" + NUMBER_OF_NODES);
+        redrawSprites();
+    }
+
+    /**
+     * Redraws the sprites on screen by calling
+     * a function respective to the current algorithm.
+     */
+    private void redrawSprites() {
+        try {
+            if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(0))) {
+                System.out.println("Using algorithm 1...");
+                redrawSpritesWithAlgorithm1();
+            } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(1))) {
+                System.out.println("Using algorithm 2...");
+                // Algorithm 2
+            }
+        } catch (NullPointerException e) {
+            errorSpecifyAlgorithm();
+        }
+    }
+
+    private void errorSpecifyAlgorithm() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Invalid Algorithm");
+        alert.setHeaderText("Algorithm");
+        alert.setContentText("You must select an algorithm before anything else.");
+        alert.showAndWait();
+        this.radiusField.setText("0");
+        this.nodeField.setText("0");
+
     }
 
     /**
      * Causes the sprites to be called and move around "performing the algorithm".
      */
-    private void redrawSpriteLoop() {
+    private void redrawSpritesWithAlgorithm1() {
         TranslateTransition transition;
         double x, y;
 
