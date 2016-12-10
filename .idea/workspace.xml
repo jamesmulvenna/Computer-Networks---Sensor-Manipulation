@@ -6,7 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Changed sensor opacity.">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/Controller.java" afterPath="$PROJECT_DIR$/src/core/Controller.java" />
     </list>
@@ -105,8 +105,8 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="349" column="89" lean-forward="false" selection-start-line="349" selection-start-column="89" selection-end-line="349" selection-end-column="89" />
+            <state relative-caret-position="277">
+              <caret line="378" column="0" lean-forward="true" selection-start-line="378" selection-start-column="0" selection-end-line="378" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -125,6 +125,7 @@
     <findStrings>
       <find>Valid</find>
       <find>radius</find>
+      <find>y</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -168,6 +169,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
+    <option name="x" value="-6" />
     <option name="y" value="22" />
     <option name="width" value="1280" />
     <option name="height" value="718" />
@@ -753,7 +755,7 @@
       <workItem from="1481145568347" duration="1449000" />
       <workItem from="1481265595546" duration="4665000" />
       <workItem from="1481329998915" duration="39000" />
-      <workItem from="1481390886653" duration="7545000" />
+      <workItem from="1481390886653" duration="11414000" />
     </task>
     <task id="LOCAL-00001" summary="Update window size and package names.">
       <created>1480795003353</created>
@@ -923,27 +925,55 @@
       <option name="project" value="LOCAL" />
       <updated>1481401095837</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Changed sensor opacity.">
+      <created>1481406952283</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1481406952283</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Apparently the Y position should always be set to be on the line.">
+      <created>1481409997030</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1481409997030</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Clutter cleanup (generating an random X value).">
+      <created>1481410436997</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1481410436997</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Code cleanup, added a function for prettyness.">
+      <created>1481410790169</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1481410790169</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41561000" />
+    <option name="totallyTimeSpent" value="45430000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="718" extended-state="6" />
+    <frame x="-6" y="22" width="1280" height="718" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32819724" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819724" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917318" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21879815" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21879815" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -976,9 +1006,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update window size and package names." />
-    <MESSAGE value="Added the X axis." />
-    <MESSAGE value="Made a shitty GUI." />
     <MESSAGE value="Updated GUI IDs." />
     <MESSAGE value="Handles number of nodes." />
     <MESSAGE value="Yaaaayy, things draw." />
@@ -1001,7 +1028,10 @@
     <MESSAGE value="Fixed an issue where adding a space to any field would cause the nodes to change positions and redraw themselves." />
     <MESSAGE value="Implemented a Choice Box that allows you to select which algorithm should be used to displace the sensors." />
     <MESSAGE value="Changed sensor opacity." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed sensor opacity." />
+    <MESSAGE value="Apparently the Y position should always be set to be on the line." />
+    <MESSAGE value="Clutter cleanup (generating an random X value)." />
+    <MESSAGE value="Code cleanup, added a function for prettyness." />
+    <option name="LAST_COMMIT_MESSAGE" value="Code cleanup, added a function for prettyness." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1288,8 +1318,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="349" column="89" lean-forward="false" selection-start-line="349" selection-start-column="89" selection-end-line="349" selection-end-column="89" />
+        <state relative-caret-position="277">
+          <caret line="378" column="0" lean-forward="true" selection-start-line="378" selection-start-column="0" selection-end-line="378" selection-end-column="0" />
           <folding />
         </state>
       </provider>

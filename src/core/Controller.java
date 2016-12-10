@@ -50,7 +50,10 @@ public class Controller implements Initializable {
      * TextField for the radius of each node.
      */
     private static String LAST_ENTERED_RADIUS = "";
-
+    /**
+     * The y position that sensors should be drawn at.
+     */
+    private static double y = (WINDOW_HEIGHT / 2) - 25;
     /**
      * The actual window that you see.
      */
@@ -81,7 +84,6 @@ public class Controller implements Initializable {
      */
     @FXML
     private ChoiceBox<String> algorithmSelector;
-
     private ObservableList<String> algorithmList;
 
     /**
@@ -299,34 +301,21 @@ public class Controller implements Initializable {
      */
     private void redrawSpritesWithAlgorithm1() {
         TranslateTransition transition;
-        double x, y;
+        double x;
 
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
-            // Generate random coordinates.
-            int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS, randomYPosition = WINDOW_HEIGHT - (int) NODE_RADIUS;
-            // This is a hacky fix for the 1 node runtime error.
-            if (randomXPosition < 2) randomXPosition = 1;
-            if (randomYPosition < 2) randomYPosition = 1;
-
-            // Assign random coordinates.
-            x = new Random().nextInt(randomXPosition);
-            y = new Random().nextInt(randomYPosition);
-
+            // Generate and assign random coordinates.
+            x = assignRandomXPosition();
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
             // Make the nodes look cute.
-            Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
-            RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-            sensorToDraw.setOpacity(0.9);
-            sensorToDraw.setFill(gradient);
+            prettifySensor(sensorToDraw, 1);
 
             transition = new TranslateTransition();
 
             // Assign re-calculated coordinates to node i.
             x = i + (NODE_RADIUS / 2) - x;
-            y = 225 - y;
             transition.setToX(x);
-            transition.setToY(y);
 
             // transition node i in a direction for the duration of a transition.
             transition.setDuration(Duration.seconds(TRANSITION_DURATION));
@@ -336,39 +325,59 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Determines what the sensors should look like. Called by each algorithm method.
+     *
+     * @param sensor          The sensor to apply to.
+     * @param algorithmNumber The algorithm number to specify prettyness for.
+     */
+    private void prettifySensor(Circle sensor, int algorithmNumber) {
+        Stop[] gradientStops;
+        RadialGradient gradient = null;
+        if (algorithmNumber == 1) {
+            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+        } else if (algorithmNumber == 2) {
+            // Make the nodes look cute.
+            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+        } else {
+            System.err.println("No prettyness to add.");
+        }
+        sensor.setOpacity(0.9);
+        sensor.setFill(gradient);
+    }
+
+    /**
+     * Generates a random X value somewhere on the line.
+     *
+     * @return int
+     */
+    private int assignRandomXPosition() {
+        int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS;
+        return new Random().nextInt(randomXPosition < 2 ? 1 : randomXPosition);
+    }
+
 
     /**
      * Causes the sprites to be called and move around using algorithm 2.
      */
     private void redrawSpritesWithAlgorithm2() {
         TranslateTransition transition;
-        double x, y;
+        double x;
         Queue<Circle> nodePositionQueue = new ArrayDeque<>((int) NUMBER_OF_NODES);
-
+        LinkedList<Double> coordinates = getSensorPositions();
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
-            // Generate random coordinates.
-            int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS, randomYPosition = (WINDOW_HEIGHT / 2) - 25;
-            // This is a hacky fix for the 1 node runtime error.
-            if (randomXPosition < 2) randomXPosition = 1;
-
-            // Assign random coordinates.
-            x = new Random().nextInt(randomXPosition);
-            y = randomYPosition;
+            x = assignRandomXPosition();
 
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
-            // Make the nodes look cute.
-            Stop[] gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
-            RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-            sensorToDraw.setOpacity(0.9);
-            sensorToDraw.setFill(gradient);
+            prettifySensor(sensorToDraw, 2);
 
             transition = new TranslateTransition();
 
-            // Assign re-calculated coordinates to node i.
             x = i + (NODE_RADIUS / 2) - x;
-            transition.setToX(x);
-            //transition.setToY(y);
+            transition.setToX(coordinates.pop());
 
             // transition node i in a direction for the duration of a transition.
             transition.setDuration(Duration.seconds(TRANSITION_DURATION));
@@ -376,6 +385,19 @@ public class Controller implements Initializable {
             transition.play();
             windowPane.getChildren().add(sensorToDraw);
         }
+    }
+
+    /**
+     * Generates a list of the correct node positions given the current number of nodes.
+     *
+     * @return LinkedList<Double>
+     */
+    private LinkedList<Double> getSensorPositions() {
+        LinkedList<Double> list = new LinkedList<>();
+        for (double coordinate = 0; coordinate < NUMBER_OF_NODES * NODE_RADIUS; coordinate += NODE_RADIUS) {
+            list.addLast(coordinate);
+        }
+        return list;
     }
 
 
