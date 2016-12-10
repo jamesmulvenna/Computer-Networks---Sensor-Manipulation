@@ -172,7 +172,10 @@ public class Controller implements Initializable {
         if (IO.isInteger(text) && Integer.valueOf(text) > 0) {
             System.out.println("Valid integer. Changing node radius.");
             NODE_RADIUS = Integer.valueOf(text);
+            NUMBER_OF_NODES = WINDOW_WIDTH / NODE_RADIUS;
             System.out.println("Node radius is now: " + NODE_RADIUS);
+            System.out.println("Adjusted required number of nodes.");
+            System.out.println("Number of Nodes: " + NUMBER_OF_NODES);
             System.out.println("Redrawing nodes...");
             redrawRadius();
         } else {
