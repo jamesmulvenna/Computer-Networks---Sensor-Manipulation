@@ -201,7 +201,7 @@ public class Controller implements Initializable {
      * Calls the sprite update method.
      */
     private void redrawRadius() {
-        NUMBER_OF_NODES = (int) (WINDOW_WIDTH / NODE_RADIUS) + 1;
+        NUMBER_OF_NODES = (int) (WINDOW_WIDTH / NODE_RADIUS);
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
         redrawSpriteLoop();
