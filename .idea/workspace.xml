@@ -105,8 +105,8 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="112" column="103" lean-forward="false" selection-start-line="112" selection-start-column="103" selection-end-line="112" selection-end-column="103" />
+            <state relative-caret-position="193">
+              <caret line="103" column="72" lean-forward="false" selection-start-line="103" selection-start-column="72" selection-end-line="103" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -751,7 +751,7 @@
       <workItem from="1481145568347" duration="1449000" />
       <workItem from="1481265595546" duration="4665000" />
       <workItem from="1481329998915" duration="39000" />
-      <workItem from="1481390886653" duration="2684000" />
+      <workItem from="1481390886653" duration="3060000" />
     </task>
     <task id="LOCAL-00001" summary="Update window size and package names.">
       <created>1480795003353</created>
@@ -893,11 +893,18 @@
       <option name="project" value="LOCAL" />
       <updated>1481397602325</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Small code cleanup.">
+      <created>1481397776017</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1481397776017</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36700000" />
+    <option name="totallyTimeSpent" value="37076000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="723" extended-state="6" />
@@ -966,7 +973,8 @@
     <MESSAGE value="Fixed the number of nodes required.&#10;Tell me if I'm wrong, but to cover 700 units, we should need 7 nodes instead of 8?" />
     <MESSAGE value="Minor bug fixes and input error checking." />
     <MESSAGE value="Whoops, now I get why we need the +1." />
-    <option name="LAST_COMMIT_MESSAGE" value="Whoops, now I get why we need the +1." />
+    <MESSAGE value="Small code cleanup." />
+    <option name="LAST_COMMIT_MESSAGE" value="Small code cleanup." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1267,8 +1275,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="112" column="103" lean-forward="false" selection-start-line="112" selection-start-column="103" selection-end-line="112" selection-end-column="103" />
+        <state relative-caret-position="193">
+          <caret line="103" column="72" lean-forward="false" selection-start-line="103" selection-start-column="72" selection-end-line="103" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

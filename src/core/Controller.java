@@ -40,6 +40,19 @@ public class Controller implements Initializable {
      * These are changed almost instantly at runtime.
      */
     private static double NUMBER_OF_NODES = 1, NODE_RADIUS = 100;
+
+    /**
+     * Used to keep track of the last string of text entered into the
+     * TextField for the number of nodes.
+     */
+    private static String LAST_ENTERED_NUMBER_OF_NODES = "";
+
+    /**
+     * Used to keep track of the last string of text entered into the
+     * TextField for the radius of each node.
+     */
+    private static String LAST_ENTERED_RADIUS = "";
+
     /**
      * The actual window that you see.
      */
@@ -87,16 +100,22 @@ public class Controller implements Initializable {
          * Causes the application to handle the number of nodes to be presented.
          */
         this.nodeField.setOnKeyReleased(event -> {
-            System.out.println("Number of nodes has changed.");
-            handleNumberOfNodesChanged();
+            if (!this.nodeField.getText().equals(LAST_ENTERED_NUMBER_OF_NODES)) {
+                LAST_ENTERED_NUMBER_OF_NODES = this.nodeField.getText();
+                System.out.println("Number of nodes has changed.");
+                handleNumberOfNodesChanged();
+            }
         });
 
         /*
          * Causes the application to handle the number of nodes/radius on a radius change.
          */
         this.radiusField.setOnKeyReleased(event -> {
-            System.out.println("Radius has changed.");
-            handleRadiusChange();
+            if (!this.radiusField.getText().equals(LAST_ENTERED_RADIUS)) {
+                System.out.println("Radius has changed.");
+                LAST_ENTERED_RADIUS = this.radiusField.getText();
+                handleRadiusChange();
+            }
         });
 
         /*
@@ -232,7 +251,6 @@ public class Controller implements Initializable {
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
         redrawSpriteLoop();
         nodeField.setText("" + NUMBER_OF_NODES);
-
     }
 
     /**
