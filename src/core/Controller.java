@@ -50,7 +50,10 @@ public class Controller implements Initializable {
      * TextField for the radius of each node.
      */
     private static String LAST_ENTERED_RADIUS = "";
-
+    /**
+     * The y position that sensors should be drawn at.
+     */
+    private static double y = (WINDOW_HEIGHT / 2) - 25;
     /**
      * The actual window that you see.
      */
@@ -81,7 +84,6 @@ public class Controller implements Initializable {
      */
     @FXML
     private ChoiceBox<String> algorithmSelector;
-
     private ObservableList<String> algorithmList;
 
     /**
@@ -300,7 +302,6 @@ public class Controller implements Initializable {
     private void redrawSpritesWithAlgorithm1() {
         TranslateTransition transition;
         double x;
-        double y = (WINDOW_HEIGHT / 2) - 25;
 
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
             // Generate and assign random coordinates.
@@ -363,7 +364,7 @@ public class Controller implements Initializable {
      */
     private void redrawSpritesWithAlgorithm2() {
         TranslateTransition transition;
-        double x, y = (WINDOW_HEIGHT / 2) - 25;
+        double x;
         Queue<Circle> nodePositionQueue = new ArrayDeque<>((int) NUMBER_OF_NODES);
         LinkedList<Double> coordinates = getSensorPositions();
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
