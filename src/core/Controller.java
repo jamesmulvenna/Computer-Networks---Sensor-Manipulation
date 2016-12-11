@@ -130,7 +130,7 @@ public class Controller implements Initializable {
         });
 
 
-        this.algorithmSelector.setItems(FXCollections.observableArrayList("Algorithm 1", "Algorithm 2"));
+        this.algorithmSelector.setItems(FXCollections.observableArrayList("Simple Coverage Algorithm", "Rigid Coverage Algorithm"));
         this.algorithmSelector.setTooltip(new Tooltip("Select the algorithm to be used when moving the sensors."));
         /*
          * Adds the elements contained by the original program to the mirror.
@@ -396,7 +396,7 @@ public class Controller implements Initializable {
     /**
      * Creates a Circle Object with a random X coordinate.
      *
-     * @return
+     * @return A Circle
      */
     private Circle createCircleAtRandomXCoordinate() {
         return new Circle(assignRandomXPosition(), y, NODE_RADIUS / 2);
