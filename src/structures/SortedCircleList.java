@@ -49,6 +49,12 @@ public class SortedCircleList {
         return this;
     }
 
+    public SortedCircleList addY(Circle circle) {
+        this.delegate.add(circle);
+        this.delegate.sort((o1, o2) -> (o1.getCenterY() <= o2.getCenterY()) ? -1 : 2);
+        return this;
+    }
+
     public boolean remove(Object o) {
         return delegate.remove(o);
     }

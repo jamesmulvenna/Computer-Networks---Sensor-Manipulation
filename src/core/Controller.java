@@ -130,7 +130,7 @@ public class Controller implements Initializable {
         });
 
 
-        this.algorithmSelector.setItems(FXCollections.observableArrayList("Simple Coverage Algorithm", "Rigid Coverage Algorithm"));
+        this.algorithmSelector.setItems(FXCollections.observableArrayList("Simple Coverage Algorithm", "Rigid Coverage Algorithm", "Coverage From Smallest-Largest Y-Coordinate Algorithm"));
         this.algorithmSelector.setTooltip(new Tooltip("Select the algorithm to be used when moving the sensors."));
         /*
          * Adds the elements contained by the original program to the mirror.
@@ -278,6 +278,9 @@ public class Controller implements Initializable {
             } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(1))) {
                 System.out.println("Using algorithm 2...");
                 redrawSpritesWithAlgorithm2();
+            } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(2))){
+                System.out.println("Using algorithm 3...");
+                redrawSpritesWithAlgorithm3();
             }
         } catch (NullPointerException e) {
             errorSpecifyAlgorithm();
@@ -347,7 +350,12 @@ public class Controller implements Initializable {
             // Make the nodes look cute.
             gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
             gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-        } else {
+        } else if (algorithmNumber == 3){
+            // Make the nodes look cute.
+            gradientStops = new Stop[]{new Stop(0, Color.GREY), new Stop(1, Color.ORANGE)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+        }
+        else {
             System.err.println("No prettyness to add.");
         }
         sensor.setOpacity(0.9);
@@ -363,6 +371,11 @@ public class Controller implements Initializable {
     private int assignRandomXPosition() {
         int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS;
         return new Random().nextInt(randomXPosition < 2 ? 1 : randomXPosition);
+    }
+
+    private int assignRandomYPosition(){
+        int randomYPosition = WINDOW_HEIGHT - (int) NODE_RADIUS;
+        return new Random().nextInt(randomYPosition < 2 ? 1 : randomYPosition);
     }
 
 
@@ -393,6 +406,30 @@ public class Controller implements Initializable {
 
     }
 
+    private void redrawSpritesWithAlgorithm3() {
+        TranslateTransition transition;
+        SortedCircleList circles = new SortedCircleList();
+        LinkedList<Double> correctPositions = getSensorPositions();
+
+        for (double i = NODE_RADIUS/2; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+            // Create a Circle object to represent a sensor radius to be drawn.
+            Circle sensorToDraw = createCircleAtRandomYCoordinate(i);
+            circles.addY(prettifySensor(sensorToDraw, 3));
+        }
+
+        for (int i = 0; i < circles.size(); i++) {
+            Circle c = circles.get(i);
+
+            transition = new TranslateTransition();
+            transition.setToY(225 - c.getCenterY());
+            applyTransition(transition, c);
+
+            windowPane.getChildren().add(c);
+        }
+
+
+    }
+
     /**
      * Creates a Circle Object with a random X coordinate.
      *
@@ -401,6 +438,8 @@ public class Controller implements Initializable {
     private Circle createCircleAtRandomXCoordinate() {
         return new Circle(assignRandomXPosition(), y, NODE_RADIUS / 2);
     }
+
+    private Circle createCircleAtRandomYCoordinate(double x) { return new Circle(x, assignRandomYPosition(), NODE_RADIUS/2); }
 
     /**
      * @param transition
