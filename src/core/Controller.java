@@ -16,9 +16,13 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
+import structures.SortedCircleList;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     /**
@@ -330,8 +334,10 @@ public class Controller implements Initializable {
      *
      * @param sensor          The sensor to apply to.
      * @param algorithmNumber The algorithm number to specify prettyness for.
+     *
+     * @return This circle
      */
-    private void prettifySensor(Circle sensor, int algorithmNumber) {
+    private Circle prettifySensor(Circle sensor, int algorithmNumber) {
         Stop[] gradientStops;
         RadialGradient gradient = null;
         if (algorithmNumber == 1) {
@@ -346,6 +352,7 @@ public class Controller implements Initializable {
         }
         sensor.setOpacity(0.9);
         sensor.setFill(gradient);
+        return sensor;
     }
 
     /**
@@ -364,27 +371,46 @@ public class Controller implements Initializable {
      */
     private void redrawSpritesWithAlgorithm2() {
         TranslateTransition transition;
-        double x;
-        Queue<Circle> nodePositionQueue = new ArrayDeque<>((int) NUMBER_OF_NODES);
-        LinkedList<Double> coordinates = getSensorPositions();
-        for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
-            x = assignRandomXPosition();
+        SortedCircleList circles = new SortedCircleList();
+        LinkedList<Double> correctPositions = getSensorPositions();
 
+        for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
             // Create a Circle object to represent a sensor radius to be drawn.
-            Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
-            prettifySensor(sensorToDraw, 2);
+            Circle sensorToDraw = createCircleAtRandomXCoordinate();
+            circles.add(prettifySensor(sensorToDraw, 2));
+        }
+
+        for (int i = 0; i < circles.size(); i++) {
+            Circle c = circles.get(i);
 
             transition = new TranslateTransition();
+            transition.setToX(correctPositions.get(i) - c.getCenterX());
+            applyTransition(transition, c);
 
-            x = i + (NODE_RADIUS / 2) - x;
-            transition.setToX(coordinates.pop());
-
-            // transition node i in a direction for the duration of a transition.
-            transition.setDuration(Duration.seconds(TRANSITION_DURATION));
-            transition.setNode(sensorToDraw);
-            transition.play();
-            windowPane.getChildren().add(sensorToDraw);
+            windowPane.getChildren().add(c);
         }
+
+
+    }
+
+    /**
+     * Creates a Circle Object with a random X coordinate.
+     *
+     * @return
+     */
+    private Circle createCircleAtRandomXCoordinate() {
+        return new Circle(assignRandomXPosition(), y, NODE_RADIUS / 2);
+    }
+
+    /**
+     * @param transition
+     * @param sensorToDraw
+     */
+    private void applyTransition(TranslateTransition transition, Circle sensorToDraw) {
+        // transition node i in a direction for the duration of a transition.
+        transition.setDuration(Duration.seconds(TRANSITION_DURATION));
+        transition.setNode(sensorToDraw);
+        transition.play();
     }
 
     /**
@@ -394,7 +420,7 @@ public class Controller implements Initializable {
      */
     private LinkedList<Double> getSensorPositions() {
         LinkedList<Double> list = new LinkedList<>();
-        for (double coordinate = 0; coordinate < NUMBER_OF_NODES * NODE_RADIUS; coordinate += NODE_RADIUS) {
+        for (double coordinate = NODE_RADIUS / 2; coordinate < (NUMBER_OF_NODES * NODE_RADIUS); coordinate += NODE_RADIUS) {
             list.addLast(coordinate);
         }
         return list;
