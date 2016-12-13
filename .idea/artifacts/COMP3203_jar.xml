@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="COMP3203:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/COMP3203_jar</output-path>
+    <root id="archive" name="COMP3203.jar">
+      <element id="module-output" name="COMP3203" />
+    </root>
+  </artifact>
+</component>
