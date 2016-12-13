@@ -316,17 +316,29 @@ public class Controller implements Initializable {
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = createCircleAtRandomXCoordinate();
-            circles.add(prettifySensor(sensorToDraw, 2));
+            circles.add(prettifySensor(sensorToDraw, 1));
         }
 
-        for (int i = 0; i < circles.size(); i++) {
+        Circle first = circles.getFirst();
+        Circle last  = circles.getLast();
+        transition = new TranslateTransition();
+        transition.setByX(NODE_RADIUS/2 - first.getCenterX());
+        applyTransition(transition,first);
+        windowPane.getChildren().add(first);
+        transition = new TranslateTransition();
+        transition.setByX((WINDOW_WIDTH-NODE_RADIUS/2)-last.getCenterX());
+        applyTransition(transition,last);
+        windowPane.getChildren().add(last);
+        Circle pointer = first;
+        for (int i = 1; i < circles.size()-1; i++) {
             Circle c = circles.get(i);
             transition = new TranslateTransition();
             transition.setToX(correctPositions.get(i) - c.getCenterX());
-            if(correctPositions.get(i)<WINDOW_WIDTH){
+            if(correctPositions.get(i)<=WINDOW_WIDTH){
                 applyTransition(transition, c);
             }
             windowPane.getChildren().add(c);
+            pointer=c;
         }
     }
 
