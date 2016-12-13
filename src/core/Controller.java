@@ -19,10 +19,7 @@ import javafx.util.Duration;
 import structures.SortedCircleList;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
     /**
@@ -42,7 +39,7 @@ public class Controller implements Initializable {
      * These are changed almost instantly at runtime.
      */
     private static int NUMBER_OF_NODES = 1;
-    private static double NODE_RADIUS = 100;
+    private static double NODE_DIAMETER = 100;
 
     /**
      * Used to keep track of the last string of text entered into the
@@ -187,7 +184,7 @@ public class Controller implements Initializable {
     private void handleZeroNodes() {
         System.out.println("Value is 0. Removing nodes...");
         NUMBER_OF_NODES = 0;
-        NODE_RADIUS = 0;
+        NODE_DIAMETER = 0;
         radiusField.setText("0");
     }
 
@@ -215,8 +212,8 @@ public class Controller implements Initializable {
         String text = this.radiusField.getText().trim();
         if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= 300) {
             System.out.println("Valid integer. Changing node radius.");
-            NODE_RADIUS = Integer.valueOf(text);
-            System.out.println("Node radius is now: " + NODE_RADIUS);
+            NODE_DIAMETER = Integer.valueOf(text);
+            System.out.println("Node radius is now: " + NODE_DIAMETER);
             System.out.println("Number of Nodes: " + NUMBER_OF_NODES);
             System.out.println("Redrawing nodes...");
         } else if (IO.isInteger(text) && Integer.valueOf(text) == 0) {
@@ -236,7 +233,7 @@ public class Controller implements Initializable {
     private void handleInvalidRadius() {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
-        NODE_RADIUS = 0;
+        NODE_DIAMETER = 0;
         this.nodeField.setText("0");
         radiusField.setText("0");
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -313,7 +310,7 @@ public class Controller implements Initializable {
         SortedCircleList circles = new SortedCircleList();
         LinkedList<Double> correctPositions = getSensorPositions();
 
-        for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+        for (double i = 0; i < NUMBER_OF_NODES * NODE_DIAMETER; i += NODE_DIAMETER) {
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = createCircleAtRandomXCoordinate();
             circles.add(prettifySensor(sensorToDraw, 1));
@@ -322,14 +319,13 @@ public class Controller implements Initializable {
         Circle first = circles.getFirst();
         Circle last  = circles.getLast();
         transition = new TranslateTransition();
-        transition.setByX(NODE_RADIUS/2 - first.getCenterX());
+        transition.setByX(NODE_DIAMETER/2 - first.getCenterX());
         applyTransition(transition,first);
         windowPane.getChildren().add(first);
         transition = new TranslateTransition();
-        transition.setByX((WINDOW_WIDTH-NODE_RADIUS/2)-last.getCenterX());
+        transition.setByX((WINDOW_WIDTH-NODE_DIAMETER/2)-last.getCenterX());
         applyTransition(transition,last);
         windowPane.getChildren().add(last);
-        Circle pointer = first;
         for (int i = 1; i < circles.size()-1; i++) {
             Circle c = circles.get(i);
             transition = new TranslateTransition();
@@ -338,7 +334,6 @@ public class Controller implements Initializable {
                 applyTransition(transition, c);
             }
             windowPane.getChildren().add(c);
-            pointer=c;
         }
     }
 
@@ -377,12 +372,12 @@ public class Controller implements Initializable {
      * @return int
      */
     private int assignRandomXPosition() {
-        int randomXPosition = WINDOW_WIDTH - (int) NODE_RADIUS;
+        int randomXPosition = WINDOW_WIDTH - (int) NODE_DIAMETER;
         return new Random().nextInt(randomXPosition < 2 ? 1 : randomXPosition);
     }
 
     private int assignRandomYPosition() {
-        int randomYPosition = WINDOW_HEIGHT - (int) NODE_RADIUS;
+        int randomYPosition = WINDOW_HEIGHT - (int) NODE_DIAMETER;
         return new Random().nextInt(randomYPosition < 2 ? 1 : randomYPosition);
     }
 
@@ -395,7 +390,7 @@ public class Controller implements Initializable {
         SortedCircleList circles = new SortedCircleList();
         LinkedList<Double> correctPositions = getSensorPositions();
 
-        for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+        for (double i = 0; i < NUMBER_OF_NODES * NODE_DIAMETER; i += NODE_DIAMETER) {
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = createCircleAtRandomXCoordinate();
             circles.add(prettifySensor(sensorToDraw, 2));
@@ -417,7 +412,7 @@ public class Controller implements Initializable {
         SortedCircleList circles = new SortedCircleList();
         LinkedList<Double> correctPositions = getSensorPositions();
 
-        for (double i = NODE_RADIUS / 2; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+        for (double i = NODE_DIAMETER / 2; i < NUMBER_OF_NODES * NODE_DIAMETER; i += NODE_DIAMETER) {
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = createCircleAtRandomYCoordinate(i);
             circles.addY(prettifySensor(sensorToDraw, 3));
@@ -442,11 +437,11 @@ public class Controller implements Initializable {
      * @return A Circle
      */
     private Circle createCircleAtRandomXCoordinate() {
-        return new Circle(assignRandomXPosition(), y, NODE_RADIUS / 2);
+        return new Circle(assignRandomXPosition(), y, NODE_DIAMETER / 2);
     }
 
     private Circle createCircleAtRandomYCoordinate(double x) {
-        return new Circle(x, assignRandomYPosition(), NODE_RADIUS / 2);
+        return new Circle(x, assignRandomYPosition(), NODE_DIAMETER / 2);
     }
 
     /**
@@ -467,7 +462,7 @@ public class Controller implements Initializable {
      */
     private LinkedList<Double> getSensorPositions() {
         LinkedList<Double> list = new LinkedList<>();
-        for (double coordinate = NODE_RADIUS / 2; coordinate < (NUMBER_OF_NODES * NODE_RADIUS); coordinate += NODE_RADIUS) {
+        for (double coordinate = NODE_DIAMETER / 2; coordinate < (NUMBER_OF_NODES * NODE_DIAMETER); coordinate += NODE_DIAMETER) {
             list.addLast(coordinate);
         }
         return list;

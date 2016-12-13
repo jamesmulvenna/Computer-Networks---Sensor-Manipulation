@@ -226,4 +226,16 @@ public class SortedCircleList {
         }
         return counter;
     }
+
+    public LinkedList<Circle> getDelegate() {
+        return delegate;
+    }
+
+    public LinkedList<Double> getPositions() {
+        LinkedList<Double> list = new LinkedList<>();
+        for (int i = 0; i < delegate.size(); i++) {
+            list.addLast(delegate.get(i).getCenterX());
+        }
+        return list;
+    }
 }
