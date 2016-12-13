@@ -41,7 +41,8 @@ public class Controller implements Initializable {
      * Default number of nodes and respective radius.
      * These are changed almost instantly at runtime.
      */
-    private static double NUMBER_OF_NODES = 1, NODE_RADIUS = 100;
+    private static int NUMBER_OF_NODES = 1;
+    private static double NODE_RADIUS = 100;
 
     /**
      * Used to keep track of the last string of text entered into the
@@ -57,7 +58,7 @@ public class Controller implements Initializable {
     /**
      * The y position that sensors should be drawn at.
      */
-    private static double y = (WINDOW_HEIGHT / 2) - 25;
+    private static double y = 227;
     /**
      * The actual window that you see.
      */
@@ -88,6 +89,11 @@ public class Controller implements Initializable {
      */
     @FXML
     private ChoiceBox<String> algorithmSelector;
+    /**
+     * Button used to start the simulation.
+     */
+    @FXML
+    private Button simButton;
     private ObservableList<String> algorithmList;
 
     /**
@@ -106,6 +112,12 @@ public class Controller implements Initializable {
             System.out.println("Application is about to quit.");
             System.exit(0);
         });
+
+        this.simButton.setOnMouseClicked(event -> {
+            redrawRadius();
+            redrawNodes();
+        });
+
 
         /*
          * Causes the application to handle the number of nodes to be presented.
@@ -132,6 +144,7 @@ public class Controller implements Initializable {
 
         this.algorithmSelector.setItems(FXCollections.observableArrayList("Simple Coverage Algorithm", "Rigid Coverage Algorithm", "Coverage From Smallest-Largest Y-Coordinate Algorithm"));
         this.algorithmSelector.setTooltip(new Tooltip("Select the algorithm to be used when moving the sensors."));
+
         /*
          * Adds the elements contained by the original program to the mirror.
          */
@@ -143,7 +156,7 @@ public class Controller implements Initializable {
 
     private void handleNumberOfNodesChanged() {
         String text = this.nodeField.getText().trim();
-        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) < 2 * WINDOW_WIDTH) {
+        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) < 201) {
             handleValidNodeChange(text);
         } else if (IO.isInteger(text) && Integer.valueOf(text) == 0) {
             handleZeroNodes();
@@ -166,7 +179,6 @@ public class Controller implements Initializable {
         NUMBER_OF_NODES = Integer.valueOf(text);
         System.out.println("Number of nodes is now: " + NUMBER_OF_NODES);
         System.out.println("Redrawing nodes...");
-        redrawNodes();
     }
 
     /**
@@ -176,7 +188,6 @@ public class Controller implements Initializable {
         System.out.println("Value is 0. Removing nodes...");
         NUMBER_OF_NODES = 0;
         NODE_RADIUS = 0;
-        redrawNodes();
         radiusField.setText("0");
     }
 
@@ -188,13 +199,12 @@ public class Controller implements Initializable {
     private void handleInvalidNumberOfSensors() {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
-        redrawNodes();
         this.nodeField.setText("0");
         radiusField.setText("0");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Invalid Input");
         alert.setHeaderText("Invalid Number of Sensors!");
-        alert.setContentText("Please ensure that you have entered a valid number of sensors.");
+        alert.setContentText("Please ensure that you have entered a valid number of sensors no greater than 200.");
         alert.showAndWait();
     }
 
@@ -203,14 +213,12 @@ public class Controller implements Initializable {
      */
     private void handleRadiusChange() {
         String text = this.radiusField.getText().trim();
-        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= WINDOW_WIDTH) {
+        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= 300) {
             System.out.println("Valid integer. Changing node radius.");
             NODE_RADIUS = Integer.valueOf(text);
-            NUMBER_OF_NODES = WINDOW_WIDTH / NODE_RADIUS;
             System.out.println("Node radius is now: " + NODE_RADIUS);
             System.out.println("Number of Nodes: " + NUMBER_OF_NODES);
             System.out.println("Redrawing nodes...");
-            redrawRadius();
         } else if (IO.isInteger(text) && Integer.valueOf(text) == 0) {
             handleZeroNodes();
         } else if (text.length() == 0) {
@@ -229,7 +237,6 @@ public class Controller implements Initializable {
         // Remove the nodes due to invalid input.
         NUMBER_OF_NODES = 0;
         NODE_RADIUS = 0;
-        redrawNodes();
         this.nodeField.setText("0");
         radiusField.setText("0");
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -244,10 +251,8 @@ public class Controller implements Initializable {
      * Redraws all of the nodes on the foreground.
      */
     private void redrawNodes() {
-        NODE_RADIUS = WINDOW_WIDTH / NUMBER_OF_NODES;
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
-        radiusField.setText("" + NODE_RADIUS);
         redrawSprites();
     }
 
@@ -256,13 +261,10 @@ public class Controller implements Initializable {
      * Calls the sprite update method.
      */
     private void redrawRadius() {
-        NUMBER_OF_NODES = (int) (WINDOW_WIDTH / NODE_RADIUS);
         // For the case that the nodes can't fill the domain after type casting.
-        if (WINDOW_WIDTH / NODE_RADIUS != NUMBER_OF_NODES) NUMBER_OF_NODES += 1;
 
         windowPane.getChildren().clear();
         windowPane.getChildren().addAll(ORIGINAL_WINDOW);
-        nodeField.setText("" + NUMBER_OF_NODES);
         redrawSprites();
     }
 
@@ -278,7 +280,7 @@ public class Controller implements Initializable {
             } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(1))) {
                 System.out.println("Using algorithm 2...");
                 redrawSpritesWithAlgorithm2();
-            } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(2))){
+            } else if (this.algorithmSelector.getValue().equals(this.algorithmSelector.getItems().get(2))) {
                 System.out.println("Using algorithm 3...");
                 redrawSpritesWithAlgorithm3();
             }
@@ -308,27 +310,23 @@ public class Controller implements Initializable {
      */
     private void redrawSpritesWithAlgorithm1() {
         TranslateTransition transition;
-        double x;
+        SortedCircleList circles = new SortedCircleList();
+        LinkedList<Double> correctPositions = getSensorPositions();
 
         for (double i = 0; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
-            // Generate and assign random coordinates.
-            x = assignRandomXPosition();
             // Create a Circle object to represent a sensor radius to be drawn.
-            Circle sensorToDraw = new Circle(x, y, NODE_RADIUS / 2);
-            // Make the nodes look cute.
-            prettifySensor(sensorToDraw, 1);
+            Circle sensorToDraw = createCircleAtRandomXCoordinate();
+            circles.add(prettifySensor(sensorToDraw, 2));
+        }
 
+        for (int i = 0; i < circles.size(); i++) {
+            Circle c = circles.get(i);
             transition = new TranslateTransition();
-
-            // Assign re-calculated coordinates to node i.
-            x = i + (NODE_RADIUS / 2) - x;
-            transition.setToX(x);
-
-            // transition node i in a direction for the duration of a transition.
-            transition.setDuration(Duration.seconds(TRANSITION_DURATION));
-            transition.setNode(sensorToDraw);
-            transition.play();
-            windowPane.getChildren().add(sensorToDraw);
+            transition.setToX(correctPositions.get(i) - c.getCenterX());
+            if(correctPositions.get(i)<WINDOW_WIDTH){
+                applyTransition(transition, c);
+            }
+            windowPane.getChildren().add(c);
         }
     }
 
@@ -337,7 +335,6 @@ public class Controller implements Initializable {
      *
      * @param sensor          The sensor to apply to.
      * @param algorithmNumber The algorithm number to specify prettyness for.
-     *
      * @return This circle
      */
     private Circle prettifySensor(Circle sensor, int algorithmNumber) {
@@ -345,20 +342,19 @@ public class Controller implements Initializable {
         RadialGradient gradient = null;
         if (algorithmNumber == 1) {
             gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.POWDERBLUE)};
-            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, gradientStops);
         } else if (algorithmNumber == 2) {
             // Make the nodes look cute.
-            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.RED)};
-            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-        } else if (algorithmNumber == 3){
+            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.LIGHTSALMON)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, gradientStops);
+        } else if (algorithmNumber == 3) {
             // Make the nodes look cute.
-            gradientStops = new Stop[]{new Stop(0, Color.GREY), new Stop(1, Color.ORANGE)};
-            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.2, true, CycleMethod.NO_CYCLE, gradientStops);
-        }
-        else {
+            gradientStops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Color.GOLDENROD)};
+            gradient = new RadialGradient(0, 0, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, gradientStops);
+        } else {
             System.err.println("No prettyness to add.");
         }
-        sensor.setOpacity(0.9);
+        sensor.setOpacity(0.7);
         sensor.setFill(gradient);
         return sensor;
     }
@@ -373,7 +369,7 @@ public class Controller implements Initializable {
         return new Random().nextInt(randomXPosition < 2 ? 1 : randomXPosition);
     }
 
-    private int assignRandomYPosition(){
+    private int assignRandomYPosition() {
         int randomYPosition = WINDOW_HEIGHT - (int) NODE_RADIUS;
         return new Random().nextInt(randomYPosition < 2 ? 1 : randomYPosition);
     }
@@ -402,8 +398,6 @@ public class Controller implements Initializable {
 
             windowPane.getChildren().add(c);
         }
-
-
     }
 
     private void redrawSpritesWithAlgorithm3() {
@@ -411,7 +405,7 @@ public class Controller implements Initializable {
         SortedCircleList circles = new SortedCircleList();
         LinkedList<Double> correctPositions = getSensorPositions();
 
-        for (double i = NODE_RADIUS/2; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
+        for (double i = NODE_RADIUS / 2; i < NUMBER_OF_NODES * NODE_RADIUS; i += NODE_RADIUS) {
             // Create a Circle object to represent a sensor radius to be drawn.
             Circle sensorToDraw = createCircleAtRandomYCoordinate(i);
             circles.addY(prettifySensor(sensorToDraw, 3));
@@ -439,7 +433,9 @@ public class Controller implements Initializable {
         return new Circle(assignRandomXPosition(), y, NODE_RADIUS / 2);
     }
 
-    private Circle createCircleAtRandomYCoordinate(double x) { return new Circle(x, assignRandomYPosition(), NODE_RADIUS/2); }
+    private Circle createCircleAtRandomYCoordinate(double x) {
+        return new Circle(x, assignRandomYPosition(), NODE_RADIUS / 2);
+    }
 
     /**
      * @param transition
