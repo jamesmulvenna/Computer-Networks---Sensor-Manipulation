@@ -223,7 +223,7 @@ public class Controller implements Initializable {
      */
     private void handleRadiusChange() {
         String text = this.radiusField.getText().trim();
-        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= 300) {
+        if (IO.isInteger(text) && Integer.valueOf(text) > 0 && Integer.valueOf(text) <= WINDOW_WIDTH) {
             System.out.println("Valid integer. Changing node radius.");
             NODE_DIAMETER = Integer.valueOf(text);
             System.out.println("Node radius is now: " + NODE_DIAMETER);
