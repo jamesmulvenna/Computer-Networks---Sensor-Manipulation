@@ -9,33 +9,38 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ *
+ *   This is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License.
+ *   If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Authors:
+ *  Christopher McMorran (100968013)
+ *  James Mulvenna (100965629)
+ *  Jenish Zalavadiya (100910343)
+ *
+ */
+
 public class Main extends Application {
-    private static Stage mainStage;
-    private static Canvas canvas;
-    private static Scene scene;
-    private static Parent root;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public static Stage getMainStage() {
-        return mainStage;
-    }
-
-    public static Canvas getCanvas() {
-        return canvas;
-    }
-
-    public static Scene getScene() {
-        return scene;
-    }
-
     @Override
     public void start(Stage primaryStage) {
-        root = null;
-        mainStage = primaryStage;
-        canvas = new Canvas(Controller.WINDOW_WIDTH, Controller.WINDOW_HEIGHT);
+        Parent root = null;
+        Canvas canvas = new Canvas(Controller.WINDOW_WIDTH, Controller.WINDOW_HEIGHT);
         try {
             System.out.println("Loading main interface...");
             root = FXMLLoader.load(getClass().getClassLoader().getResource("core/MainApplication.fxml"));
@@ -45,7 +50,7 @@ public class Main extends Application {
         }
         System.out.println("Main interface loaded.");
         primaryStage.setTitle("COMP 3203 Project");
-        scene = new Scene(root, 700, 500);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

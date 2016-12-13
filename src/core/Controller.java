@@ -3,7 +3,6 @@ package core;
 import io.IO;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -14,12 +13,36 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import structures.SortedCircleList;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.ResourceBundle;
+
+/**
+ *
+ *   This is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License.
+ *   If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Authors:
+ *  Christopher McMorran (100968013)
+ *  James Mulvenna (100965629)
+ *  Jenish Zalavadiya (100910343)
+ *
+ */
 
 public class Controller implements Initializable {
     /**
@@ -53,10 +76,6 @@ public class Controller implements Initializable {
      */
     private static String LAST_ENTERED_RADIUS = "";
     /**
-     * The y position that sensors should be drawn at.
-     */
-    private static double y = 227;
-    /**
      * The actual window that you see.
      */
     @FXML
@@ -72,11 +91,6 @@ public class Controller implements Initializable {
     @FXML
     private TextField nodeField;
     /**
-     * The X axis drawn across the center of the screen.
-     */
-    @FXML
-    private Line xAxis;
-    /**
      * The radius of the nodes.
      */
     @FXML
@@ -91,7 +105,6 @@ public class Controller implements Initializable {
      */
     @FXML
     private Button simButton;
-    private ObservableList<String> algorithmList;
 
     /**
      * Called after the Class constructor by JavaFX to inject code.
@@ -410,7 +423,6 @@ public class Controller implements Initializable {
     private void redrawSpritesWithAlgorithm3() {
         TranslateTransition transition;
         SortedCircleList circles = new SortedCircleList();
-        LinkedList<Double> correctPositions = getSensorPositions();
 
         for (double i = NODE_DIAMETER / 2; i < NUMBER_OF_NODES * NODE_DIAMETER; i += NODE_DIAMETER) {
             // Create a Circle object to represent a sensor radius to be drawn.
@@ -437,6 +449,10 @@ public class Controller implements Initializable {
      * @return A Circle
      */
     private Circle createCircleAtRandomXCoordinate() {
+        /*
+      The y position that sensors should be drawn at.
+     */
+        double y = 227;
         return new Circle(assignRandomXPosition(), y, NODE_DIAMETER / 2);
     }
 
@@ -445,8 +461,8 @@ public class Controller implements Initializable {
     }
 
     /**
-     * @param transition
-     * @param sensorToDraw
+     * @param transition The transition to be applied.
+     * @param sensorToDraw The sensor to apply the transition to.
      */
     private void applyTransition(TranslateTransition transition, Circle sensorToDraw) {
         // transition node i in a direction for the duration of a transition.

@@ -9,7 +9,25 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
- * Created by chris on 2016-12-10.
+ *
+ *   This is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License.
+ *   If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Authors:
+ *  Christopher McMorran (100968013)
+ *  James Mulvenna (100965629)
+ *  Jenish Zalavadiya (100910343)
+ *
  */
 public class SortedCircleList {
     private LinkedList<Circle> delegate;
@@ -33,7 +51,6 @@ public class SortedCircleList {
     public Circle removeLast() {
         return delegate.removeLast();
     }
-
 
     public boolean contains(Object o) {
         return delegate.contains(o);
@@ -219,23 +236,4 @@ public class SortedCircleList {
         delegate.sort(c);
     }
 
-    public double diameterShouldbe(int i) {
-        double counter = 0.0;
-        for (int j = 0; j < i + 1; j++) {
-            counter += this.delegate.get(j).getRadius();
-        }
-        return counter;
-    }
-
-    public LinkedList<Circle> getDelegate() {
-        return delegate;
-    }
-
-    public LinkedList<Double> getPositions() {
-        LinkedList<Double> list = new LinkedList<>();
-        for (int i = 0; i < delegate.size(); i++) {
-            list.addLast(delegate.get(i).getCenterX());
-        }
-        return list;
-    }
 }
